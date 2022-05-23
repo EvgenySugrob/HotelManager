@@ -1,0 +1,77 @@
+﻿<Window x:Class="HotelManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManager"
+        mc:Ignorable="d"
+        Title="Hotel Manager" Height="700" Width="1000"
+        WindowStartupLocation="CenterScreen"
+        Icon="icon.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+
+        <Border Background="#FF494747" Grid.RowSpan="3"></Border>
+        <Border Background="#ff494747" Grid.Column="1"></Border>
+        <Button Margin="0 0 100 0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18" Name="BackBt" Click="BackBt_Click" Template="{StaticResource btTemplate}" Background="White" Visibility="Hidden" Grid.Column="1">Назад</Button>
+        <Image Source="logoHM.png" Stretch="UniformToFill" Margin="0,-28,0,0" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="0.735"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.173687"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <!--<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Name="MainTitle" Text="Главная страница" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Grid.Column="1" Margin="25 0 0 0" FontWeight="DemiBold"></TextBlock>
+        </StackPanel>-->
+        
+
+        <!--Menu-->
+        <WrapPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="10 5 0 0">
+            <Button Template="{StaticResource btTemplate}" Background="White" Margin="0 5 0 0" Name="MainBt" Click="MainBt_Click">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="MainPage.png" Height="80" Width="100" ></Image>
+                    <TextBlock Text="Главная" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="15"></TextBlock>
+                </WrapPanel>
+            </Button>
+            <Button Template="{StaticResource btTemplate}" Background="White" Margin="0 5 0 0" Name="RegistrationBt" Click="RegistrationBt_Click">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="Registration.png" Height="80" Width="100"></Image>
+                    <TextBlock Text="Регистрация" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="15"></TextBlock>
+                </WrapPanel>
+            </Button>
+            <Button Template="{StaticResource btTemplate}" Background="White" Margin="0 5 0 0" Name="RoomsBt" Click="RoomsBt_Click">
+                <WrapPanel Orientation="Vertical" >
+                    <Image Source="Bedroom.png" Height="80" Width="100"/>
+                    <TextBlock Text="Комнаты" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="15"></TextBlock>
+                </WrapPanel>
+            </Button>
+            <Button Template="{StaticResource btTemplate}" Background="White" Margin="0 5 0 0" Name="GuestBt" Click="GuestBt_Click">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="People.png" Height="80" Width="100"></Image>
+                    <TextBlock Text="Гости" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="15"></TextBlock>
+                </WrapPanel>
+            </Button>
+            <Button Template="{StaticResource btTemplate}" Background="White" Margin="0 5 0 0"  Name="AdditionServiceBt" Click="AdditionServiceBt_Click">
+                <WrapPanel Orientation="Vertical">
+                    <Image Source="addServise.png" Height="80" Width="100"></Image>
+                    <TextBlock Text="Доп.Услуги" HorizontalAlignment="Center" FontWeight="DemiBold" FontSize="15"></TextBlock>
+                </WrapPanel>
+            </Button>
+        </WrapPanel>
+        <Frame Grid.Row="1" Grid.Column="1" Name="NavigationFrame" NavigationUIVisibility="Hidden" ContentRendered="NavigationFrame_ContentRendered"></Frame>
+    </Grid>
+</Window>

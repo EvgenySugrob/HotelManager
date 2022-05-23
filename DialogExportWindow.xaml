@@ -1,0 +1,31 @@
+﻿<Window x:Class="HotelManager.DialogExportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HotelManager"
+        mc:Ignorable="d"
+        Title="Создание отчета" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Vertical">
+                <TextBlock FontSize="18" Margin="5 10 5 10">Первая дата:</TextBlock>
+                <TextBlock FontSize="18" Margin="5 10 5 0">Вторая дата:</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Margin="0 10 0 0">
+                <DatePicker SelectedDateFormat="Short" SelectedDateChanged="firstDateChang" Name="firstDatePicker" Margin="5 0 5 10"></DatePicker>
+                <DatePicker SelectedDateFormat="Short" SelectedDateChanged="secondDateChang" Name="secondDatePicker" Margin="5 10 5 0"></DatePicker>
+            </StackPanel>
+            <Button Name="createExcel" Click="createExcelClick" Grid.Row="1" Grid.ColumnSpan="2" Template="{StaticResource btTemplate}" Width="150" Height="30" Background="White">Сформировать отчет</Button>
+
+
+
+        </Grid>
+</Window>

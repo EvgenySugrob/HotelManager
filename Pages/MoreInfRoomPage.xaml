@@ -1,0 +1,58 @@
+﻿<Page x:Class="HotelManager.Pages.MoreInfRoomPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HotelManager.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="MoreInfRoomPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock FontSize="24" FontWeight="DemiBold" Text="{Binding ID,StringFormat='{}Номер: {0}'}" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="10 5 0 0"></TextBlock>
+
+        <ItemsControl HorizontalAlignment="Left" Name="lvRoomInfo" Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Background="{x:Null}" BorderBrush="{x:Null}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <Image Width="550" Height="450" Stretch="Fill" Margin="10 0 0 0">
+                            <Image.Source>
+                                <Binding Path="ImageRoom">
+
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Width="300">
+                            <TextBlock FontSize="18" FontWeight="DemiBold" Text="В комнате:" Margin="10 10 0 0"></TextBlock>
+                            <TextBlock FontSize="18" Name="inRoomText" Text="{Binding InRoom}" TextWrapping="Wrap" Margin="10 10 0 0"/>
+                            <TextBlock FontSize="18" FontWeight="DemiBold" Text="В ванной:" Margin="10 10 0 0"></TextBlock>
+                            <TextBlock FontSize="18" Name="inBathroomText" Text="{Binding InBathroom}" TextWrapping="Wrap" Margin="10 10 0 0"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
+        <!--<Image Grid.Row="1" Margin="5" Name="imageRoom">
+            <Image.Source>
+                <Binding Path="ImageRoom"></Binding>
+            </Image.Source>
+        </Image>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
+            <TextBlock FontSize="18" FontWeight="DemiBold" Text="В комнате:" Margin="10 10 0 0"></TextBlock>
+            <TextBlock FontSize="18" Name="inRoomText" TextWrapping="Wrap" Margin="10 10 0 0"/>
+            <TextBlock FontSize="18" FontWeight="DemiBold" Text="В ванной:" Margin="10 10 0 0"></TextBlock>
+            <TextBlock FontSize="18" Name="inBathroomText" TextWrapping="Wrap" Margin="10 10 0 0"></TextBlock>
+        </StackPanel>-->
+        
+        
+    </Grid>
+</Page>

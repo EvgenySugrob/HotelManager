@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Hotel_managerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Bronirovaniye">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientID" Type="Int32" />
+    <Property Name="NomerID" Type="Int32" />
+    <Property Name="DataBronirovaniy" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Bronirovaniye_Client" FromRole="Bronirovaniye" ToRole="Client" />
+    <NavigationProperty Name="NomernoyFond" Relationship="Self.FK_Bronirovaniye_NomernoyFond" FromRole="Bronirovaniye" ToRole="NomernoyFond" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Familiya" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Imya" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Otchestvo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DataRozdeniy" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PasportnyeDannye" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Adres" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Grazhdanstvo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Telephon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Bronirovaniye" Relationship="Self.FK_Bronirovaniye_Client" FromRole="Client" ToRole="Bronirovaniye" />
+    <NavigationProperty Name="DataOkazaniyaUslug" Relationship="Self.FK_DataOkazaniyaUslug_Client" FromRole="Client" ToRole="DataOkazaniyaUslug" />
+    <NavigationProperty Name="ZayezdVyezd" Relationship="Self.FK_ZayezdVyezd_Client" FromRole="Client" ToRole="ZayezdVyezd" />
+  </EntityType>
+  <EntityType Name="DataOkazaniyaUslug">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UslugID" Type="Int32" />
+    <Property Name="DataOkazaniy" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ClientaID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_DataOkazaniyaUslug_Client" FromRole="DataOkazaniyaUslug" ToRole="Client" />
+    <NavigationProperty Name="DopUslugi" Relationship="Self.FK_DataOkazaniyaUslug_DopUslugi" FromRole="DataOkazaniyaUslug" ToRole="DopUslugi" />
+  </EntityType>
+  <EntityType Name="DopUslugi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nazvanie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Stoimost" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DataOkazaniyaUslug" Relationship="Self.FK_DataOkazaniyaUslug_DopUslugi" FromRole="DopUslugi" ToRole="DataOkazaniyaUslug" />
+  </EntityType>
+  <EntityType Name="NomernoyFond">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TipID" Type="Int32" />
+    <Property Name="Etazh" Type="Int32" Nullable="false" />
+    <Property Name="Vmestimost" Type="Int32" Nullable="false" />
+    <Property Name="SostoynieNomera" Type="Boolean" />
+    <NavigationProperty Name="Bronirovaniye" Relationship="Self.FK_Bronirovaniye_NomernoyFond" FromRole="NomernoyFond" ToRole="Bronirovaniye" />
+    <NavigationProperty Name="TipNomera" Relationship="Self.FK_NomernoyFond_TipNomera" FromRole="NomernoyFond" ToRole="TipNomera" />
+    <NavigationProperty Name="ZayezdVyezd" Relationship="Self.FK_ZayezdVyezd_NomernoyFond" FromRole="NomernoyFond" ToRole="ZayezdVyezd" />
+  </EntityType>
+  <EntityType Name="Polzovatel">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Dolznost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Parol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TipNomera">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TipNomera1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Tsena" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="NomernoyFond" Relationship="Self.FK_NomernoyFond_TipNomera" FromRole="TipNomera" ToRole="NomernoyFond" />
+  </EntityType>
+  <EntityType Name="ZayezdVyezd">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientID" Type="Int32" />
+    <Property Name="NomerID" Type="Int32" />
+    <Property Name="DataZaseleniya" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DataVyezda" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_ZayezdVyezd_Client" FromRole="ZayezdVyezd" ToRole="Client" />
+    <NavigationProperty Name="NomernoyFond" Relationship="Self.FK_ZayezdVyezd_NomernoyFond" FromRole="ZayezdVyezd" ToRole="NomernoyFond" />
+  </EntityType>
+  <EntityType Name="C1">
+    <Key>
+      <PropertyRef Name="Id_nomera" />
+      <PropertyRef Name="Id_tip" />
+      <PropertyRef Name="Etazh" />
+      <PropertyRef Name="Vmestimost" />
+      <PropertyRef Name="Sostoyanie" />
+    </Key>
+    <Property Name="Id_nomera" Type="Int32" Nullable="false" />
+    <Property Name="Id_tip" Type="Int32" Nullable="false" />
+    <Property Name="Etazh" Type="Int32" Nullable="false" />
+    <Property Name="Vmestimost" Type="Int32" Nullable="false" />
+    <Property Name="Sostoyanie" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Bronirovaniye_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="Bronirovaniye" Type="Self.Bronirovaniye" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bronirovaniye">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Bronirovaniye_NomernoyFond">
+    <End Role="NomernoyFond" Type="Self.NomernoyFond" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Bronirovaniye" Type="Self.Bronirovaniye" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NomernoyFond">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bronirovaniye">
+        <PropertyRef Name="NomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DataOkazaniyaUslug_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DataOkazaniyaUslug" Type="Self.DataOkazaniyaUslug" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DataOkazaniyaUslug">
+        <PropertyRef Name="ClientaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ZayezdVyezd_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ZayezdVyezd" Type="Self.ZayezdVyezd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ZayezdVyezd">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DataOkazaniyaUslug_DopUslugi">
+    <End Role="DopUslugi" Type="Self.DopUslugi" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DataOkazaniyaUslug" Type="Self.DataOkazaniyaUslug" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DopUslugi">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DataOkazaniyaUslug">
+        <PropertyRef Name="UslugID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NomernoyFond_TipNomera">
+    <End Role="TipNomera" Type="Self.TipNomera" Multiplicity="0..1" />
+    <End Role="NomernoyFond" Type="Self.NomernoyFond" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipNomera">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NomernoyFond">
+        <PropertyRef Name="TipID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ZayezdVyezd_NomernoyFond">
+    <End Role="NomernoyFond" Type="Self.NomernoyFond" Multiplicity="0..1" />
+    <End Role="ZayezdVyezd" Type="Self.ZayezdVyezd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NomernoyFond">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ZayezdVyezd">
+        <PropertyRef Name="NomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelManagerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bronirovaniye" EntityType="Self.Bronirovaniye" />
+    <EntitySet Name="Client" EntityType="Self.Client" />
+    <EntitySet Name="DataOkazaniyaUslug" EntityType="Self.DataOkazaniyaUslug" />
+    <EntitySet Name="DopUslugi" EntityType="Self.DopUslugi" />
+    <EntitySet Name="NomernoyFond" EntityType="Self.NomernoyFond" />
+    <EntitySet Name="Polzovatel" EntityType="Self.Polzovatel" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TipNomera" EntityType="Self.TipNomera" />
+    <EntitySet Name="ZayezdVyezd" EntityType="Self.ZayezdVyezd" />
+    <EntitySet Name="C1" EntityType="Self.C1" />
+    <AssociationSet Name="FK_Bronirovaniye_Client" Association="Self.FK_Bronirovaniye_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Bronirovaniye" EntitySet="Bronirovaniye" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Bronirovaniye_NomernoyFond" Association="Self.FK_Bronirovaniye_NomernoyFond">
+      <End Role="NomernoyFond" EntitySet="NomernoyFond" />
+      <End Role="Bronirovaniye" EntitySet="Bronirovaniye" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DataOkazaniyaUslug_Client" Association="Self.FK_DataOkazaniyaUslug_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="DataOkazaniyaUslug" EntitySet="DataOkazaniyaUslug" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ZayezdVyezd_Client" Association="Self.FK_ZayezdVyezd_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ZayezdVyezd" EntitySet="ZayezdVyezd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DataOkazaniyaUslug_DopUslugi" Association="Self.FK_DataOkazaniyaUslug_DopUslugi">
+      <End Role="DopUslugi" EntitySet="DopUslugi" />
+      <End Role="DataOkazaniyaUslug" EntitySet="DataOkazaniyaUslug" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NomernoyFond_TipNomera" Association="Self.FK_NomernoyFond_TipNomera">
+      <End Role="TipNomera" EntitySet="TipNomera" />
+      <End Role="NomernoyFond" EntitySet="NomernoyFond" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ZayezdVyezd_NomernoyFond" Association="Self.FK_ZayezdVyezd_NomernoyFond">
+      <End Role="NomernoyFond" EntitySet="NomernoyFond" />
+      <End Role="ZayezdVyezd" EntitySet="ZayezdVyezd" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

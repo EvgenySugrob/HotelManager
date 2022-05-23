@@ -1,0 +1,99 @@
+﻿<Page x:Class="HotelManager.Pages.PaymentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HotelManager.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PaymentPage" IsVisibleChanged="Page_IsVisibleChanged">
+
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TabControl Grid.Row="1" Margin="5 5 5 0">
+                <TabItem Header="Ожидается отъезд" FontWeight="DemiBold">
+                    <StackPanel Orientation="Vertical">
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="100 10 0 0">
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Сортировка:" Width="75" TextAlignment="Right" Margin="0 0 10 0" VerticalAlignment="Center"></TextBlock>
+                                <ComboBox Width="150" Name="ComboSort" SelectionChanged="ComboSort_SelectionChanged">
+                                    <TextBlock>По умолчанию</TextBlock>
+                                    <TextBlock>Номер по возр</TextBlock>
+                                    <TextBlock>Номер по убыв</TextBlock>
+                                    <TextBlock>Дата отъезда по возрастанию</TextBlock>
+                                    <TextBlock>Дата отъезда по убыванию</TextBlock>
+                                </ComboBox>
+                            </StackPanel>
+                        </WrapPanel>
+
+                        <ListView Name="LViewPayment" Margin="20" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0 10 0 10" Width="1000"  Background="#D3D3D3" Orientation="Horizontal">
+                                        <StackPanel Margin="20 20 0 20" Orientation="Vertical" Width="400" HorizontalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Name="RoomText" FontSize="18" FontWeight="DemiBold" Text="{Binding RoomID,StringFormat='{}№ {0} ||'}"></TextBlock>
+                                                <TextBlock Name="SurnameText" FontSize="18" FontWeight="SemiBold" Text="{Binding Client.Surname}" Margin="5 0 0 0"></TextBlock>
+                                                <TextBlock Name="NameText" FontSize="18" FontWeight="SemiBold" Text="{Binding Client.Name}" Margin="5 0 0 0"></TextBlock>
+                                                <TextBlock Name="PatronymicText"  FontSize="18" FontWeight="SemiBold" Text="{Binding Client.Patronymic}" Margin="5 0 0 0"></TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Name="TelephoneText" Text="{Binding Client.Telephone,StringFormat={}Телефон: {0}}" FontSize="14" ></TextBlock>
+                                            <TextBlock Name="CheckOutText" FontSize="14"  Text="{Binding CheckOutDate, StringFormat='{}Дата отъезда: {0: dd.MM.yyyy}'}"></TextBlock>
+                                        </StackPanel>
+                                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center" Margin="150 0 0 0">
+                                            <Button VerticalAlignment="Center" HorizontalAlignment="Center" Template="{StaticResource btTemplate}" FontSize="14" Name="PaymentBt" Click="PaymentBt_Click">Расчет</Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Закрытые счета" FontWeight="DemiBold">
+                    <StackPanel Orientation="Vertical">
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="100 10 0 0">
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Сортировка:" Width="75" TextAlignment="Right" Margin="0 0 10 0" VerticalAlignment="Center"></TextBlock>
+                                <ComboBox Width="150" Name="ComboSortClose" SelectionChanged="ComboSortClose_SelectionChanged">
+                                    <TextBlock>По умолчанию</TextBlock>
+                                    <TextBlock>Номер по возр</TextBlock>
+                                    <TextBlock>Номер по убыв</TextBlock>
+                                    <TextBlock>Дата отъезда по возрастанию</TextBlock>
+                                    <TextBlock>Дата отъезда по убыванию</TextBlock>
+                                </ComboBox>
+                            </StackPanel>
+                        </WrapPanel>
+
+                        <ListView Name="LViewPaymentClose" Margin="20" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0 10 0 10" Width="1000"  Background="#D3D3D3" Orientation="Horizontal">
+                                        <StackPanel Margin="20 20 0 20" Orientation="Vertical" Width="400" HorizontalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Name="RoomText" FontSize="18" FontWeight="DemiBold" Text="{Binding RoomID,StringFormat='{}№ {0} ||'}"></TextBlock>
+                                                <TextBlock Name="SurnameText" FontSize="18" FontWeight="SemiBold" Text="{Binding Client.Surname}" Margin="5 0 0 0"></TextBlock>
+                                                <TextBlock Name="NameText" FontSize="18" FontWeight="SemiBold" Text="{Binding Client.Name}" Margin="5 0 0 0"></TextBlock>
+                                                <TextBlock Name="PatronymicText"  FontSize="18" FontWeight="SemiBold" Text="{Binding Client.Patronymic}" Margin="5 0 0 0"></TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Name="TelephoneText" Text="{Binding Client.Telephone,StringFormat={}Телефон: {0}}" FontSize="14" ></TextBlock>
+                                            <TextBlock Name="CheckOutText" FontSize="14"  Text="{Binding CheckOutDate, StringFormat='{}Дата отъезда: {0: dd.MM.yyyy}'}"></TextBlock>
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+
+
+        </Grid>
+    </ScrollViewer>
+</Page>

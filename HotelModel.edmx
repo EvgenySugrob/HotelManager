@@ -1,0 +1,745 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Hotel_managerModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdditionalServices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CheckInCheckOut">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="RoomID" Type="int" />
+          <Property Name="CountOfPeopl" Type="int" />
+          <Property Name="CheckInDate" Type="date" Nullable="false" />
+          <Property Name="CheckOutDate" Type="date" Nullable="false" />
+          <Property Name="CountDay" Type="int" />
+          <Property Name="Actual" Type="int" />
+          <Property Name="PriceAllDay" Type="int" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="PassportDate" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Nationality" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Telephone" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="FillingRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoomID" Type="int" />
+          <Property Name="InRoom" Type="nvarchar" MaxLength="255" />
+          <Property Name="InBathroom" Type="nvarchar" MaxLength="255" />
+          <Property Name="ImageRoom" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="ProvisionOfServices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServicesID" Type="int" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="RoomID" Type="int" />
+          <Property Name="PriceServices" Type="int" />
+          <Property Name="CheckID" Type="int" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="RoomID" Type="int" />
+          <Property Name="ReservationDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoomFund">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="Floor" Type="int" Nullable="false" />
+          <Property Name="NumberSeats" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TypeNumber">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Dolznost" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parol" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bronirovaniye_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovaniye_NomernoyFond">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataOkazaniyaUslug_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataOkazaniyaUslug_DopUslugi">
+          <End Role="AdditionalServices" Type="Self.AdditionalServices" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdditionalServices">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="ServicesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FillingRoom_RoomFund">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1" />
+          <End Role="FillingRoom" Type="Self.FillingRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FillingRoom">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NomernoyFond_TipNomera">
+          <End Role="TypeNumber" Type="Self.TypeNumber" Multiplicity="0..1" />
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeNumber">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoomFund">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProvisionOfServices_CheckInCheckOut">
+          <End Role="CheckInCheckOut" Type="Self.CheckInCheckOut" Multiplicity="0..1" />
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckInCheckOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="CheckID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProvisionOfServices_RoomFund">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZayezdVyezd_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CheckInCheckOut" Type="Self.CheckInCheckOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckInCheckOut">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZayezdVyezd_NomernoyFond">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1" />
+          <End Role="CheckInCheckOut" Type="Self.CheckInCheckOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckInCheckOut">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Hotel_managerModelContainer">
+          <EntitySet Name="AdditionalServices" EntityType="Self.AdditionalServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CheckInCheckOut" EntityType="Self.CheckInCheckOut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FillingRoom" EntityType="Self.FillingRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProvisionOfServices" EntityType="Self.ProvisionOfServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoomFund" EntityType="Self.RoomFund" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeNumber" EntityType="Self.TypeNumber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bronirovaniye_Client" Association="Self.FK_Bronirovaniye_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovaniye_NomernoyFond" Association="Self.FK_Bronirovaniye_NomernoyFond">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataOkazaniyaUslug_Client" Association="Self.FK_DataOkazaniyaUslug_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataOkazaniyaUslug_DopUslugi" Association="Self.FK_DataOkazaniyaUslug_DopUslugi">
+            <End Role="AdditionalServices" EntitySet="AdditionalServices" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FillingRoom_RoomFund" Association="Self.FK_FillingRoom_RoomFund">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="FillingRoom" EntitySet="FillingRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NomernoyFond_TipNomera" Association="Self.FK_NomernoyFond_TipNomera">
+            <End Role="TypeNumber" EntitySet="TypeNumber" />
+            <End Role="RoomFund" EntitySet="RoomFund" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProvisionOfServices_CheckInCheckOut" Association="Self.FK_ProvisionOfServices_CheckInCheckOut">
+            <End Role="CheckInCheckOut" EntitySet="CheckInCheckOut" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProvisionOfServices_RoomFund" Association="Self.FK_ProvisionOfServices_RoomFund">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZayezdVyezd_Client" Association="Self.FK_ZayezdVyezd_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="CheckInCheckOut" EntitySet="CheckInCheckOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZayezdVyezd_NomernoyFond" Association="Self.FK_ZayezdVyezd_NomernoyFond">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="CheckInCheckOut" EntitySet="CheckInCheckOut" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Hotel_managerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdditionalServices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProvisionOfServices" Relationship="Self.FK_DataOkazaniyaUslug_DopUslugi" FromRole="AdditionalServices" ToRole="ProvisionOfServices" />
+        </EntityType>
+        <EntityType Name="CheckInCheckOut">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="CountOfPeopl" Type="Int32" />
+          <Property Name="CheckInDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CheckOutDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CountDay" Type="Int32" />
+          <Property Name="Actual" Type="Int32" />
+          <Property Name="PriceAllDay" Type="Int32" />
+          <NavigationProperty Name="ProvisionOfServices" Relationship="Self.FK_ProvisionOfServices_CheckInCheckOut" FromRole="CheckInCheckOut" ToRole="ProvisionOfServices" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_ZayezdVyezd_Client" FromRole="CheckInCheckOut" ToRole="Client" />
+          <NavigationProperty Name="RoomFund" Relationship="Self.FK_ZayezdVyezd_NomernoyFond" FromRole="CheckInCheckOut" ToRole="RoomFund" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PassportDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telephone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CheckInCheckOut" Relationship="Self.FK_ZayezdVyezd_Client" FromRole="Client" ToRole="CheckInCheckOut" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK_Bronirovaniye_Client" FromRole="Client" ToRole="Reservation" />
+          <NavigationProperty Name="ProvisionOfServices" Relationship="Self.FK_DataOkazaniyaUslug_Client" FromRole="Client" ToRole="ProvisionOfServices" />
+        </EntityType>
+        <EntityType Name="FillingRoom">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="InRoom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="InBathroom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ImageRoom" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="RoomFund" Relationship="Self.FK_FillingRoom_RoomFund" FromRole="FillingRoom" ToRole="RoomFund" />
+        </EntityType>
+        <EntityType Name="ProvisionOfServices">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServicesID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="PriceServices" Type="Int32" />
+          <Property Name="CheckID" Type="Int32" />
+          <NavigationProperty Name="AdditionalServices" Relationship="Self.FK_DataOkazaniyaUslug_DopUslugi" FromRole="ProvisionOfServices" ToRole="AdditionalServices" />
+          <NavigationProperty Name="CheckInCheckOut" Relationship="Self.FK_ProvisionOfServices_CheckInCheckOut" FromRole="ProvisionOfServices" ToRole="CheckInCheckOut" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_DataOkazaniyaUslug_Client" FromRole="ProvisionOfServices" ToRole="Client" />
+          <NavigationProperty Name="RoomFund" Relationship="Self.FK_ProvisionOfServices_RoomFund" FromRole="ProvisionOfServices" ToRole="RoomFund" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="RoomID" Type="Int32" />
+          <Property Name="ReservationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Bronirovaniye_Client" FromRole="Reservation" ToRole="Client" />
+          <NavigationProperty Name="RoomFund" Relationship="Self.FK_Bronirovaniye_NomernoyFond" FromRole="Reservation" ToRole="RoomFund" />
+        </EntityType>
+        <EntityType Name="RoomFund">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="Floor" Type="Int32" Nullable="false" />
+          <Property Name="NumberSeats" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" />
+          <NavigationProperty Name="CheckInCheckOut" Relationship="Self.FK_ZayezdVyezd_NomernoyFond" FromRole="RoomFund" ToRole="CheckInCheckOut" />
+          <NavigationProperty Name="FillingRoom" Relationship="Self.FK_FillingRoom_RoomFund" FromRole="RoomFund" ToRole="FillingRoom" />
+          <NavigationProperty Name="ProvisionOfServices" Relationship="Self.FK_ProvisionOfServices_RoomFund" FromRole="RoomFund" ToRole="ProvisionOfServices" />
+          <NavigationProperty Name="Reservation" Relationship="Self.FK_Bronirovaniye_NomernoyFond" FromRole="RoomFund" ToRole="Reservation" />
+          <NavigationProperty Name="TypeNumber" Relationship="Self.FK_NomernoyFond_TipNomera" FromRole="RoomFund" ToRole="TypeNumber" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeNumber">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RoomFund" Relationship="Self.FK_NomernoyFond_TipNomera" FromRole="TypeNumber" ToRole="RoomFund" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Dolznost" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Parol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DataOkazaniyaUslug_DopUslugi">
+          <End Role="AdditionalServices" Type="Self.AdditionalServices" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdditionalServices">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="ServicesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProvisionOfServices_CheckInCheckOut">
+          <End Role="CheckInCheckOut" Type="Self.CheckInCheckOut" Multiplicity="0..1" />
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckInCheckOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="CheckID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZayezdVyezd_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CheckInCheckOut" Type="Self.CheckInCheckOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckInCheckOut">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ZayezdVyezd_NomernoyFond">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1" />
+          <End Role="CheckInCheckOut" Type="Self.CheckInCheckOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CheckInCheckOut">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovaniye_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataOkazaniyaUslug_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FillingRoom_RoomFund">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1" />
+          <End Role="FillingRoom" Type="Self.FillingRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FillingRoom">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProvisionOfServices_RoomFund">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProvisionOfServices" Type="Self.ProvisionOfServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProvisionOfServices">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bronirovaniye_NomernoyFond">
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoomFund">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NomernoyFond_TipNomera">
+          <End Role="TypeNumber" Type="Self.TypeNumber" Multiplicity="0..1" />
+          <End Role="RoomFund" Type="Self.RoomFund" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeNumber">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RoomFund">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdditionalServices" EntityType="Self.AdditionalServices" />
+          <EntitySet Name="CheckInCheckOut" EntityType="Self.CheckInCheckOut" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="FillingRoom" EntityType="Self.FillingRoom" />
+          <EntitySet Name="ProvisionOfServices" EntityType="Self.ProvisionOfServices" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" />
+          <EntitySet Name="RoomFund" EntityType="Self.RoomFund" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TypeNumber" EntityType="Self.TypeNumber" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_DataOkazaniyaUslug_DopUslugi" Association="Self.FK_DataOkazaniyaUslug_DopUslugi">
+            <End Role="AdditionalServices" EntitySet="AdditionalServices" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProvisionOfServices_CheckInCheckOut" Association="Self.FK_ProvisionOfServices_CheckInCheckOut">
+            <End Role="CheckInCheckOut" EntitySet="CheckInCheckOut" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZayezdVyezd_Client" Association="Self.FK_ZayezdVyezd_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="CheckInCheckOut" EntitySet="CheckInCheckOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ZayezdVyezd_NomernoyFond" Association="Self.FK_ZayezdVyezd_NomernoyFond">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="CheckInCheckOut" EntitySet="CheckInCheckOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovaniye_Client" Association="Self.FK_Bronirovaniye_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataOkazaniyaUslug_Client" Association="Self.FK_DataOkazaniyaUslug_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FillingRoom_RoomFund" Association="Self.FK_FillingRoom_RoomFund">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="FillingRoom" EntitySet="FillingRoom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProvisionOfServices_RoomFund" Association="Self.FK_ProvisionOfServices_RoomFund">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="ProvisionOfServices" EntitySet="ProvisionOfServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bronirovaniye_NomernoyFond" Association="Self.FK_Bronirovaniye_NomernoyFond">
+            <End Role="RoomFund" EntitySet="RoomFund" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NomernoyFond_TipNomera" Association="Self.FK_NomernoyFond_TipNomera">
+            <End Role="TypeNumber" EntitySet="TypeNumber" />
+            <End Role="RoomFund" EntitySet="RoomFund" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Hotel_managerModelContainer" CdmEntityContainer="HotelManagerEntities">
+          <EntitySetMapping Name="AdditionalServices">
+            <EntityTypeMapping TypeName="Hotel_managerModel.AdditionalServices">
+              <MappingFragment StoreEntitySet="AdditionalServices">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CheckInCheckOut">
+            <EntityTypeMapping TypeName="Hotel_managerModel.CheckInCheckOut">
+              <MappingFragment StoreEntitySet="CheckInCheckOut">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="CountOfPeopl" ColumnName="CountOfPeopl" />
+                <ScalarProperty Name="CheckInDate" ColumnName="CheckInDate" />
+                <ScalarProperty Name="CheckOutDate" ColumnName="CheckOutDate" />
+                <ScalarProperty Name="CountDay" ColumnName="CountDay" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="PriceAllDay" ColumnName="PriceAllDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="Hotel_managerModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="PassportDate" ColumnName="PassportDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FillingRoom">
+            <EntityTypeMapping TypeName="Hotel_managerModel.FillingRoom">
+              <MappingFragment StoreEntitySet="FillingRoom">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="InRoom" ColumnName="InRoom" />
+                <ScalarProperty Name="InBathroom" ColumnName="InBathroom" />
+                <ScalarProperty Name="ImageRoom" ColumnName="ImageRoom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProvisionOfServices">
+            <EntityTypeMapping TypeName="Hotel_managerModel.ProvisionOfServices">
+              <MappingFragment StoreEntitySet="ProvisionOfServices">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ServicesID" ColumnName="ServicesID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="PriceServices" ColumnName="PriceServices" />
+                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservation">
+            <EntityTypeMapping TypeName="Hotel_managerModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="ReservationDate" ColumnName="ReservationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoomFund">
+            <EntityTypeMapping TypeName="Hotel_managerModel.RoomFund">
+              <MappingFragment StoreEntitySet="RoomFund">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="NumberSeats" ColumnName="NumberSeats" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Hotel_managerModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeNumber">
+            <EntityTypeMapping TypeName="Hotel_managerModel.TypeNumber">
+              <MappingFragment StoreEntitySet="TypeNumber">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Hotel_managerModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Dolznost" ColumnName="Dolznost" />
+                <ScalarProperty Name="Parol" ColumnName="Parol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
